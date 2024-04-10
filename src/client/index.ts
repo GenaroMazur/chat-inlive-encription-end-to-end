@@ -8,5 +8,4 @@ client.connect("ws://localhost:8080")
         client.setMessageHandler(messageHandler(client))
 
         console.log(await client.login("genaro"));
-        console.log(await client.sendMessage("hello world!", "genaro2"))
     });
