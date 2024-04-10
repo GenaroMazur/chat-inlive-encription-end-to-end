@@ -36,7 +36,8 @@ export class Connection {
     }
 
     public setMessageHandler(callback: (message: string) => any) {
-        this.ws?.on("message", (message) => {
+        if (!this.ws) throw new Error("No WebSocket");
+        this.ws.on("message", (message) => {
 
             if (isJSON(message.toString("utf-8"))) {
                 const json = JSON.parse(message.toString("utf-8"));
@@ -56,8 +57,8 @@ export class Connection {
     private send(type: "login", username: string, publicKey: string): Promise<{ from: string, message: string, id: string; }>;
     private send(type: "get" | "login" | "logout" | "talk", source?: string, data?: string): Promise<{ from: string, message: string, id: string; }> {
         return new Promise((resolve: any) => {
-            if (!this.ws) throw new Error("No WebSocket connection");
             const id = randomUUID();
+            if (!this.ws) return resolve({ message: "No WebSocket connection", from: "system", id });
             const messageToSend: { type: string, id: string, to?: string, username?: string, message?: string, publicKey?: string, source?: String; } = { type, id };
 
             switch (type) {
@@ -76,6 +77,7 @@ export class Connection {
                     messageToSend.source = source;
                     break;
             }
+
             this.ws.send(JSON.stringify(messageToSend));
             this.pendingMessages[id] = { resolve };
         });
@@ -89,9 +91,8 @@ export class Connection {
         return true;
     }
 
-    public login(username: string) {
-        if (!this.ws) throw new Error("No WebSocket connected");
-        return this.send("login", username, this.publicKey);
+    public async login(username: string) {
+        return await this.send("login", username, this.publicKey);
     }
 
     public async getUsers(): Promise<{ [username: string]: { username: string, publicKey: string; }; }> {
