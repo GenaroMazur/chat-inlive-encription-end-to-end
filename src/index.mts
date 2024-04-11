@@ -9,6 +9,7 @@ import { messageHandler } from "./client/handlers/messageHandler.js";
 import { clientAction } from "./client/handlers/cliHandler.mjs";
 import { networkInterfaces } from "os";
 import { isIP } from "net";
+import { cliHandler } from "./server/handlers/cliHandler.mjs";
 
 
 inquirer.prompt({
@@ -118,5 +119,7 @@ inquirer.prompt({
 
 
         server.listen(port.port);
+        webSocket.port = port.port;
+        cliHandler(webSocket)
     }
 });

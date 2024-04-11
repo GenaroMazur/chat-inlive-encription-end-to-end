@@ -4,6 +4,7 @@ import WebSocket from "ws";
 export class WebSocketClient {
     public static clients: { [username: string]: WebSocketClient; } = {};
 
+    public ip: string
     public username: string | null = null;
     public publicKey: string | null = null;
 
@@ -13,7 +14,9 @@ export class WebSocketClient {
     constructor(
         public readonly ws: WebSocket,
         private readonly req: IncomingMessage
-    ) { }
+    ) {
+        this.ip = req.socket.remoteAddress!.replace("::ffff:", "");
+    }
 
     public login(username: string, publicKey: string) {
         if(WebSocketClient.clients[username]) return false
