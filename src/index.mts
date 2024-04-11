@@ -9,7 +9,6 @@ import { messageHandler } from "./client/handlers/messageHandler.js";
 import { clientAction } from "./client/handlers/cliHandler.mjs";
 import { networkInterfaces } from "os";
 import { isIP } from "net";
-import ipMatching from "ip-matching"
 
 
 inquirer.prompt({
