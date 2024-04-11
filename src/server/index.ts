@@ -10,3 +10,4 @@ const webSocket = new WebSocketServer(server);
 webSocket.setConnectionHandler(connectionHandler)
 
 server.listen(8080);
+webSocket.addAllowIp(["::1", "127.0.0.1"]);

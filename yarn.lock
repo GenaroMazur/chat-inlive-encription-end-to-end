@@ -486,6 +486,11 @@ inquirer@^9.2.17:
     strip-ansi "^6.0.1"
     wrap-ansi "^6.2.0"
 
+ip-matching@^2.1.2:
+  version "2.1.2"
+  resolved "https://registry.yarnpkg.com/ip-matching/-/ip-matching-2.1.2.tgz#40742c1c1d9ad9c565ad95b6ba86c9d65ee90fce"
+  integrity sha512-/ok+VhKMasgR5gvTRViwRFQfc0qYt9Vdowg6TO4/pFlDCob5ZjGPkwuOoQVCd5OrMm20zqh+1vA8KLJZTeWudg==
+
 is-binary-path@~2.1.0:
   version "2.1.0"
   resolved "https://registry.yarnpkg.com/is-binary-path/-/is-binary-path-2.1.0.tgz#ea1f7f3b80f064236e83470f86c09c254fb45b09"
