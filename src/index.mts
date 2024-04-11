@@ -8,7 +8,8 @@ import { Connection } from "./client/class/Conection.js";
 import { messageHandler } from "./client/handlers/messageHandler.js";
 import { clientAction } from "./client/handlers/cliHandler.mjs";
 import { networkInterfaces } from "os";
-
+import { isIP } from "net";
+import ipMatching from "ip-matching"
 
 
 inquirer.prompt({
@@ -104,8 +105,15 @@ inquirer.prompt({
                     message: "coloque las ips o sub redes que quiere añadir separado por comas (ej: ::1, 127.0.0.1, 192.168.0.0/24, 0.0.0.0/0) "
                 })).ips as string;
 
-                console.log(ips.split(",").map(s => s.trim()));
-                webSocket.addAllowIp(ips.split(",").map(s => s.trim()));
+                webSocket.addAllowIp(ips
+                    .split(",")
+                    .map(s => s.trim())
+                    .filter(s => {
+                        const mask = parseInt(s.split("/")[1] || "-1");
+
+                        return isIP(s) || (isIP(s.split("/")[0]) && s.includes("/") && mask >= 0 && mask < 25);
+                    }));
+
                 break;
         }
 
