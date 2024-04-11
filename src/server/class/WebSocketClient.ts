@@ -34,6 +34,7 @@ export class WebSocketClient {
     }
 
     public closeConnection() {
+        this.ws.close();
         this.username?delete WebSocketClient.clients[this.username]:null
     }
 
